@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Financial Management — Set 10</title>
+<style>
+body{font-family:Arial,sans-serif;background:#f4f6fb;margin:0;padding:18px;color:#222}
+.card{max-width:800px;margin:auto;background:#fff;border-radius:16px;padding:24px;box-shadow:0 4px 20px #0001}
+h1{font-size:25px;margin-top:0} .meta{display:grid;gap:10px;margin-bottom:20px}
+input[type=text]{padding:12px;border:1px solid #ccc;border-radius:8px;font-size:15px}
+.q{margin:18px 0;padding:16px;border:1px solid #ddd;border-radius:12px}
+.opt{display:block;padding:10px;margin:7px 0;background:#f7f7f7;border-radius:8px;cursor:pointer}
+button{background:#1769e0;color:white;border:0;padding:13px 22px;border-radius:9px;font-size:16px;cursor:pointer}
+.result{text-align:center;padding:25px;margin-top:20px;background:#eef7ee;border-radius:12px}
+.small{color:#666;font-size:13px}
+</style></head><body><div class="card">
+<h1>Financial Management — Set 10</h1>
+<p class="small">10 questions • Automatic scoring • Student result shown immediately</p>
+<div class="meta"><input id="name" type="text" placeholder="Student Name">
+<input id="roll" type="text" placeholder="Roll Number"></div>
+<form id="quiz"></form>
+<button onclick="submitQuiz()">Submit Quiz</button>
+<div id="result" class="result" style="display:none"></div>
+</div>
+<script>
+const questions=[{"q": "Which decision determines the distribution of earnings between dividends and retained earnings?", "opts": ["Dividend decision", "Investment decision", "Production decision", "Purchasing decision"], "ans": "A"}, {"q": "The time value of money is based on the idea that:", "opts": ["A rupee today is generally worth more than a rupee received later", "All rupees have identical timing value", "Future money is always worth more", "Interest has no effect"], "ans": "A"}, {"q": "Discounting is the process of:", "opts": ["Finding present value from a future amount", "Finding future value from present value", "Calculating inventory", "Calculating tax only"], "ans": "A"}, {"q": "A risk-averse investor generally prefers:", "opts": ["Lower risk for a given expected return", "Higher risk regardless of return", "Zero liquidity", "Only speculative securities"], "ans": "A"}, {"q": "Unsystematic risk can generally be reduced through:", "opts": ["Diversification", "Higher inflation", "More debt", "Higher fixed costs"], "ans": "A"}, {"q": "The cost of equity represents:", "opts": ["Return required by equity shareholders", "Interest paid to lenders", "Inventory cost", "Tax rate"], "ans": "A"}, {"q": "A firm's optimal capital structure is the one that:", "opts": ["Balances financing costs and risk in a way that supports firm value", "Uses only debt", "Uses only equity", "Has no financial risk"], "ans": "A"}, {"q": "If sales increase while fixed operating costs remain unchanged, EBIT generally:", "opts": ["Increases more than proportionately when operating leverage is present", "Falls automatically", "Becomes zero", "Remains fixed"], "ans": "A"}, {"q": "Working capital management mainly deals with:", "opts": ["Current assets and current liabilities", "Only fixed assets", "Only equity shares", "Only long-term loans"], "ans": "A"}, {"q": "The economic order quantity formula balances:", "opts": ["Ordering cost and carrying cost", "Sales and tax", "Debt and equity", "Profit and dividend"], "ans": "A"}];
+const letters=["A","B","C","D"];
+const quiz=document.getElementById("quiz");
+questions.forEach((x,i)=>{
+ let d=document.createElement("div"); d.className="q";
+ d.innerHTML="<b>"+(i+1)+". "+x.q+"</b>";
+ x.opts.forEach((o,j)=>{
+   d.innerHTML += '<label class="opt"><input type="radio" name="q'+i+'" value="'+letters[j]+'"> '+letters[j]+". "+o+"</label>";
+ });
+ quiz.appendChild(d);
+});
+function submitQuiz(){
+ const name=document.getElementById("name").value.trim(), roll=document.getElementById("roll").value.trim();
+ if(!name||!roll){alert("Please enter your name and roll number.");return;}
+ let score=0;
+ for(let i=0;i<questions.length;i++){
+   const a=document.querySelector('input[name="q'+i+'"]:checked');
+   if(!a){alert("Please answer Question "+(i+1)+".");return;}
+   if(a.value===questions[i].ans) score++;
+ }
+ const pct=Math.round(score/questions.length*100);
+ document.getElementById("result").style.display="block";
+ document.getElementById("result").innerHTML="<h2>Quiz Submitted</h2><p><b>"+name+"</b> ("+roll+")</p><p style='font-size:28px'><b>"+score+"/10</b></p><p>Percentage: <b>"+pct+"%</b></p><p>Your result has been calculated on this device.</p>";
+ window.scrollTo(0,document.body.scrollHeight);
+}
+</script></body></html>

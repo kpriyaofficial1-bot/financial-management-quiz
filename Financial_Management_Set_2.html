@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Financial Management — Set 2</title>
+<style>
+body{font-family:Arial,sans-serif;background:#f4f6fb;margin:0;padding:18px;color:#222}
+.card{max-width:800px;margin:auto;background:#fff;border-radius:16px;padding:24px;box-shadow:0 4px 20px #0001}
+h1{font-size:25px;margin-top:0} .meta{display:grid;gap:10px;margin-bottom:20px}
+input[type=text]{padding:12px;border:1px solid #ccc;border-radius:8px;font-size:15px}
+.q{margin:18px 0;padding:16px;border:1px solid #ddd;border-radius:12px}
+.opt{display:block;padding:10px;margin:7px 0;background:#f7f7f7;border-radius:8px;cursor:pointer}
+button{background:#1769e0;color:white;border:0;padding:13px 22px;border-radius:9px;font-size:16px;cursor:pointer}
+.result{text-align:center;padding:25px;margin-top:20px;background:#eef7ee;border-radius:12px}
+.small{color:#666;font-size:13px}
+</style></head><body><div class="card">
+<h1>Financial Management — Set 2</h1>
+<p class="small">10 questions • Automatic scoring • Student result shown immediately</p>
+<div class="meta"><input id="name" type="text" placeholder="Student Name">
+<input id="roll" type="text" placeholder="Roll Number"></div>
+<form id="quiz"></form>
+<button onclick="submitQuiz()">Submit Quiz</button>
+<div id="result" class="result" style="display:none"></div>
+</div>
+<script>
+const questions=[{"q": "The traditional view of financial management emphasizes a balance between:", "opts": ["Profitability and liquidity", "Sales and production", "Debt and equity only", "Assets and liabilities only"], "ans": "A"}, {"q": "Future value generally increases when:", "opts": ["The interest rate decreases", "The number of periods decreases", "The compounding rate or number of periods increases", "The present value becomes zero"], "ans": "C"}, {"q": "An annuity is best described as:", "opts": ["A single future payment", "Equal periodic payments over a specified period", "An irregular series of payments", "A perpetual loss"], "ans": "B"}, {"q": "Which is an explicit cost of financing?", "opts": ["Opportunity cost of retained earnings", "Interest paid on debt", "Imputed cost", "Dividend foregone"], "ans": "B"}, {"q": "The cost of preference shares is generally based on:", "opts": ["Dividend divided by net proceeds", "Interest divided by face value", "EBIT divided by sales", "Dividend multiplied by tax rate"], "ans": "A"}, {"q": "Under the NOI approach, the overall cost of capital is assumed to:", "opts": ["Remain constant regardless of leverage", "Increase with every rupee of debt", "Fall to zero with debt", "Depend only on dividends"], "ans": "A"}, {"q": "Financial leverage arises from fixed financial charges such as:", "opts": ["Wages", "Rent", "Interest", "Raw materials"], "ans": "C"}, {"q": "EBIT-EPS analysis is used to compare:", "opts": ["Inventory levels", "Alternative financing plans and their EPS effects", "Sales territories", "Cash budgets only"], "ans": "B"}, {"q": "A longer receivables collection period generally results in:", "opts": ["Lower investment in receivables", "Higher investment in receivables", "Zero working capital", "Lower credit sales"], "ans": "B"}, {"q": "If daily usage is 40 units and lead time is 5 days, with no safety stock, the reorder point is:", "opts": ["100 units", "150 units", "200 units", "250 units"], "ans": "C"}];
+const letters=["A","B","C","D"];
+const quiz=document.getElementById("quiz");
+questions.forEach((x,i)=>{
+ let d=document.createElement("div"); d.className="q";
+ d.innerHTML="<b>"+(i+1)+". "+x.q+"</b>";
+ x.opts.forEach((o,j)=>{
+   d.innerHTML += '<label class="opt"><input type="radio" name="q'+i+'" value="'+letters[j]+'"> '+letters[j]+". "+o+"</label>";
+ });
+ quiz.appendChild(d);
+});
+function submitQuiz(){
+ const name=document.getElementById("name").value.trim(), roll=document.getElementById("roll").value.trim();
+ if(!name||!roll){alert("Please enter your name and roll number.");return;}
+ let score=0;
+ for(let i=0;i<questions.length;i++){
+   const a=document.querySelector('input[name="q'+i+'"]:checked');
+   if(!a){alert("Please answer Question "+(i+1)+".");return;}
+   if(a.value===questions[i].ans) score++;
+ }
+ const pct=Math.round(score/questions.length*100);
+ document.getElementById("result").style.display="block";
+ document.getElementById("result").innerHTML="<h2>Quiz Submitted</h2><p><b>"+name+"</b> ("+roll+")</p><p style='font-size:28px'><b>"+score+"/10</b></p><p>Percentage: <b>"+pct+"%</b></p><p>Your result has been calculated on this device.</p>";
+ window.scrollTo(0,document.body.scrollHeight);
+}
+</script></body></html>

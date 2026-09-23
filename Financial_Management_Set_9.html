@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Financial Management — Set 9</title>
+<style>
+body{font-family:Arial,sans-serif;background:#f4f6fb;margin:0;padding:18px;color:#222}
+.card{max-width:800px;margin:auto;background:#fff;border-radius:16px;padding:24px;box-shadow:0 4px 20px #0001}
+h1{font-size:25px;margin-top:0} .meta{display:grid;gap:10px;margin-bottom:20px}
+input[type=text]{padding:12px;border:1px solid #ccc;border-radius:8px;font-size:15px}
+.q{margin:18px 0;padding:16px;border:1px solid #ddd;border-radius:12px}
+.opt{display:block;padding:10px;margin:7px 0;background:#f7f7f7;border-radius:8px;cursor:pointer}
+button{background:#1769e0;color:white;border:0;padding:13px 22px;border-radius:9px;font-size:16px;cursor:pointer}
+.result{text-align:center;padding:25px;margin-top:20px;background:#eef7ee;border-radius:12px}
+.small{color:#666;font-size:13px}
+</style></head><body><div class="card">
+<h1>Financial Management — Set 9</h1>
+<p class="small">10 questions • Automatic scoring • Student result shown immediately</p>
+<div class="meta"><input id="name" type="text" placeholder="Student Name">
+<input id="roll" type="text" placeholder="Roll Number"></div>
+<form id="quiz"></form>
+<button onclick="submitQuiz()">Submit Quiz</button>
+<div id="result" class="result" style="display:none"></div>
+</div>
+<script>
+const questions=[{"q": "Shareholders' wealth is commonly reflected in:", "opts": ["Market value of shares", "Number of employees", "Inventory units", "Office area"], "ans": "A"}, {"q": "The opportunity cost of funds refers to:", "opts": ["Return forgone by choosing one alternative over another", "Cash discount only", "Tax paid", "Wages paid"], "ans": "A"}, {"q": "If ₹20,000 is discounted at 10% for one year, its present value is approximately:", "opts": ["₹18,181.82", "₹20,000", "₹22,000", "₹19,000"], "ans": "A"}, {"q": "Risk premium is the:", "opts": ["Additional return required for bearing risk", "Tax on dividends", "Cost of inventory", "Guaranteed return"], "ans": "A"}, {"q": "The Capital Asset Pricing Model relates expected return to:", "opts": ["Systematic risk measured by beta", "Inventory turnover", "Current ratio", "Debt maturity only"], "ans": "A"}, {"q": "Weighted average cost of capital uses weights based on:", "opts": ["Relative proportions of financing sources", "Number of employees", "Units of inventory", "Sales territories"], "ans": "A"}, {"q": "The Net Operating Income approach assumes that:", "opts": ["Overall capitalization rate remains constant", "Debt is always free", "Equity cost remains constant", "Firm value is zero"], "ans": "A"}, {"q": "Degree of financial leverage is higher when:", "opts": ["Fixed financial charges are relatively high", "Interest is zero", "Debt is zero", "EBIT is zero"], "ans": "A"}, {"q": "A bank overdraft is generally a:", "opts": ["Short-term source of finance", "Fixed asset", "Long-term equity source", "Non-current investment"], "ans": "A"}, {"q": "Reorder level is the inventory level at which:", "opts": ["A fresh order should be placed", "Inventory is written off", "Sales stop", "Profit is distributed"], "ans": "A"}];
+const letters=["A","B","C","D"];
+const quiz=document.getElementById("quiz");
+questions.forEach((x,i)=>{
+ let d=document.createElement("div"); d.className="q";
+ d.innerHTML="<b>"+(i+1)+". "+x.q+"</b>";
+ x.opts.forEach((o,j)=>{
+   d.innerHTML += '<label class="opt"><input type="radio" name="q'+i+'" value="'+letters[j]+'"> '+letters[j]+". "+o+"</label>";
+ });
+ quiz.appendChild(d);
+});
+function submitQuiz(){
+ const name=document.getElementById("name").value.trim(), roll=document.getElementById("roll").value.trim();
+ if(!name||!roll){alert("Please enter your name and roll number.");return;}
+ let score=0;
+ for(let i=0;i<questions.length;i++){
+   const a=document.querySelector('input[name="q'+i+'"]:checked');
+   if(!a){alert("Please answer Question "+(i+1)+".");return;}
+   if(a.value===questions[i].ans) score++;
+ }
+ const pct=Math.round(score/questions.length*100);
+ document.getElementById("result").style.display="block";
+ document.getElementById("result").innerHTML="<h2>Quiz Submitted</h2><p><b>"+name+"</b> ("+roll+")</p><p style='font-size:28px'><b>"+score+"/10</b></p><p>Percentage: <b>"+pct+"%</b></p><p>Your result has been calculated on this device.</p>";
+ window.scrollTo(0,document.body.scrollHeight);
+}
+</script></body></html>
