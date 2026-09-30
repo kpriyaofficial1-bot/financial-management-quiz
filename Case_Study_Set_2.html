@@ -1,0 +1,55 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Financial Management Case Study 2</title>
+<style>
+body{font-family:Arial,sans-serif;background:#f4f7fb;margin:0;color:#222}
+.container{max-width:850px;margin:25px auto;background:#fff;padding:28px;border-radius:16px;box-shadow:0 4px 18px #0002}
+h1{color:#173b6c} .tag{background:#eaf1fb;padding:8px 12px;border-radius:8px;display:inline-block}
+.case{background:#f8fafc;border-left:5px solid #173b6c;padding:18px;border-radius:8px;line-height:1.6}
+label{font-weight:bold;display:block;margin:18px 0 8px}
+input,textarea{width:100%;box-sizing:border-box;padding:12px;border:1px solid #bbb;border-radius:7px}
+textarea{min-height:110px;resize:vertical}
+button{margin-top:20px;padding:13px 20px;border:0;border-radius:8px;background:#173b6c;color:#fff;font-size:16px;cursor:pointer;margin-right:8px}
+.secondary{background:#555} .result{margin-top:20px;padding:16px;background:#eef7ee;border-radius:8px;display:none}
+.note{font-size:13px;color:#666;line-height:1.5}
+</style></head>
+<body><div class="container">
+<h1>Financial Management – Case Study 2</h1>
+<div class="tag">BBA MJC-8 • Group 2 • 20 Marks</div>
+<h3>Case Study</h3><div class="case">Meera Enterprises needs ₹12 lakh after 5 years for expansion. The company is considering investing a lump sum today at 8% annual compound interest or making equal annual deposits. The finance manager wants to compare the future value of the alternatives and understand the time value of money before making the decision.</div>
+<form id="form">
+<label>Student Name</label><input id="student" required>
+<label>Roll Number</label><input id="roll" required>
+<div><label>1. What is meant by the time value of money?</label><textarea required placeholder="Write your answer here..."></textarea></div><div><label>2. Differentiate between present value and future value.</label><textarea required placeholder="Write your answer here..."></textarea></div><div><label>3. Explain the meaning of an annuity with a suitable example.</label><textarea required placeholder="Write your answer here..."></textarea></div><div><label>4. Calculate the future value of ₹12 lakh invested today at 8% p.a. compounded annually for 5 years.</label><textarea required placeholder="Write your answer here..."></textarea></div><div><label>5. Explain how the concept of TVM helps Meera Enterprises in financial planning.</label><textarea required placeholder="Write your answer here..."></textarea></div>
+<button type="submit">Generate Answer Sheet</button>
+<button type="button" class="secondary" id="printBtn">Print / Save as PDF</button>
+</form>
+<div id="result" class="result"></div>
+<p class="note"><b>Instructions:</b> After clicking “Generate Answer Sheet”, a downloadable HTML answer sheet will be created. Send the downloaded file to your teacher through WhatsApp/email or print/save it as PDF.</p>
+</div>
+<script>
+document.getElementById('printBtn').addEventListener('click',function(){
+  if(!document.getElementById('student').value.trim()){alert('Please enter your name first.');return;}
+  window.print();
+});
+document.getElementById('form').addEventListener('submit',function(e){
+ e.preventDefault();
+ const name=document.getElementById('student').value.trim();
+ const roll=document.getElementById('roll').value.trim();
+ const tas=[...document.querySelectorAll('textarea')];
+ const answers=tas.map(x=>x.value.trim());
+ if(answers.some(x=>!x)){alert('Please answer all 5 questions before generating the answer sheet.');return;}
+ let rows='';
+ answers.forEach((a,i)=>{rows+=`<h3>Question ${i+1}</h3><p style="white-space:pre-wrap">${escapeHtml(a)}</p>`;});
+ const doc=`<!doctype html><html><head><meta charset="utf-8"><title>Group 2 Answer Sheet</title>
+ <style>body{font-family:Arial;max-width:800px;margin:30px auto;line-height:1.6}h1{color:#173b6c}.meta{padding:12px;background:#f1f5f9;border-radius:8px}</style></head>
+ <body><h1>Financial Management – Case Study 2</h1><div class="meta"><b>Group:</b> 2<br><b>Student Name:</b> ${escapeHtml(name)}<br><b>Roll Number:</b> ${escapeHtml(roll)}<br><b>Submitted:</b> ${new Date().toLocaleString()}</div>${rows}</body></html>`;
+ const blob=new Blob([doc],{type:'text/html'});
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement('a'); a.href=url; a.download=`Group_2_Answer_Sheet_${roll}.html`; a.click();
+ setTimeout(()=>URL.revokeObjectURL(url),1000);
+ const r=document.getElementById('result'); r.style.display='block';
+ r.innerHTML='<b>Answer sheet generated successfully.</b><br>Please send the downloaded file to your teacher.';
+});
+function escapeHtml(str){return str.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));}
+</script></body></html>
